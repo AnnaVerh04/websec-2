@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расписание СГАУ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <div class="header">
+            <div class="group-info">
+                <h1 id="groupTitle">Расписание СГАУ</h1>
+                <p id="groupSubtitle" class="subtitle">Выберите группу</p>
+            </div>
+        </div>
+
+        <div class="group-selector">
+            <select id="groupSelect" class="group-select">
+                <option value="">-- Выберите группу --</option>
+            </select>
+            <button id="loadBtn" class="btn-primary">Показать расписание</button>
+        </div>
+
+        <div class="week-navigation">
+            <button id="weekPrevBtn" class="week-nav-btn" disabled>← Предыдущая неделя</button>
+            <span id="currentWeekLabel" class="week-current">31 неделя</span>
+            <button id="weekNextBtn" class="week-nav-btn" disabled>Следующая неделя →</button>
+        </div>
+
+        <div class="schedule-wrapper">
+            <div id="scheduleContainer">
+                <div class="placeholder">
+                    <span>📅</span>
+                    <p>Выберите группу для просмотра расписания</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

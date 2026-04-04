@@ -1,0 +1,315 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, 'Segoe UI', 'Roboto', sans-serif;
+    background: #f0f2f5;
+    padding: 20px;
+}
+
+.app {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* Шапка */
+.header {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    padding: 24px 30px;
+}
+
+.group-info h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Поиск */
+.search-box {
+    margin-top: 15px;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+}
+
+/* Выбор группы */
+.group-selector {
+    padding: 20px 30px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.group-select {
+    flex: 1;
+    min-width: 250px;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+}
+
+.btn-primary {
+    padding: 10px 24px;
+    background: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: #357abd;
+}
+
+/* Навигация по неделям */
+.week-navigation {
+    padding: 15px 30px;
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.week-nav-btn {
+    padding: 8px 20px;
+    background: #f0f2f5;
+    border: 1px solid #d0d0d0;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.week-nav-btn:hover:not(:disabled) {
+    background: #4a90e2;
+    color: white;
+    border-color: #4a90e2;
+}
+
+.week-nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.week-current {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4a90e2;  /* Голубой цвет для номера недели */
+}
+
+.day-date {
+    font-size: 11px;
+    font-weight: normal;
+    color: #888;
+    display: block;
+    margin-top: 4px;
+}
+
+/* Таблица расписания */
+.schedule-wrapper {
+    padding: 20px 30px;
+    overflow-x: auto;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 700px;
+}
+
+.schedule-table th {
+    background: #f8f9fa;
+    padding: 12px 10px;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #e0e0e0;
+    font-size: 13px;
+}
+
+.schedule-table td {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    vertical-align: top;
+    background: white;
+}
+
+.time-column {
+    background: #fafbfc;
+    font-weight: 500;
+    color: #000000;
+    text-align: left;
+    width: 110px;
+    font-size: 12px;
+}
+
+.time-column strong {
+    font-weight: 500;
+    color: #000000;
+}
+
+.lesson-cell {
+    min-height: 80px;
+}
+
+.lesson-item {
+    margin-bottom: 8px;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.lesson-item:hover {
+    background: #e8f0fe;
+    transform: translateX(2px);
+}
+
+.lesson-name {
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+
+.lesson-teacher {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 3px;
+}
+
+.lesson-room {
+    font-size: 11px;
+    color: #4a90e2;
+    font-weight: 500;
+}
+
+.lesson-type {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #e8f0fe;
+    color: #4a90e2;
+    margin-top: 5px;
+}
+
+.no-lessons {
+    color: #ccc;
+    font-size: 12px;
+    text-align: center;
+    padding: 15px 0;
+}
+
+.placeholder {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.placeholder span {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+/* Подсветка поиска */
+.highlight {
+    background: #fff3cd !important;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+/* Адаптация для мобилки */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .header {
+        padding: 20px;
+    }
+    
+    .group-info h1 {
+        font-size: 20px;
+    }
+    
+    .group-selector {
+        padding: 15px 20px;
+        flex-direction: column;
+    }
+    
+    .group-select {
+        width: 100%;
+    }
+    
+    .btn-primary {
+        width: 100%;
+    }
+    
+    .week-navigation {
+        padding: 12px 20px;
+    }
+    
+    .week-current {
+        font-size: 14px;
+    }
+    
+    .schedule-wrapper {
+        padding: 15px 20px;
+    }
+    
+    .schedule-table {
+        font-size: 11px;
+        min-width: 600px;
+    }
+    
+    .schedule-table th,
+    .schedule-table td {
+        padding: 6px;
+    }
+    
+    .time-column {
+        width: 85px;
+        font-size: 10px;
+    }
+
+
+    
+    .lesson-item {
+        padding: 5px;
+    }
+    
+    .day-date {
+        font-size: 9px;
+    }
+}
