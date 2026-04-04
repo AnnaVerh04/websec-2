@@ -19,7 +19,6 @@ body {
     overflow: hidden;
 }
 
-/* Шапка */
 .header {
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     color: white;
@@ -36,7 +35,6 @@ body {
     opacity: 0.9;
 }
 
-/* Поиск */
 .search-box {
     margin-top: 15px;
 }
@@ -51,7 +49,6 @@ body {
     outline: none;
 }
 
-/* Выбор группы */
 .group-selector {
     padding: 20px 30px;
     background: #f8f9fa;
@@ -87,7 +84,6 @@ body {
     background: #357abd;
 }
 
-/* Навигация по неделям */
 .week-navigation {
     padding: 15px 30px;
     background: white;
@@ -123,7 +119,7 @@ body {
 .week-current {
     font-size: 18px;
     font-weight: 600;
-    color: #4a90e2;  /* Голубой цвет для номера недели */
+    color: #4a90e2;
 }
 
 .day-date {
@@ -134,7 +130,6 @@ body {
     margin-top: 4px;
 }
 
-/* Таблица расписания */
 .schedule-wrapper {
     padding: 20px 30px;
     overflow-x: auto;
@@ -168,8 +163,9 @@ body {
     font-weight: 500;
     color: #000000;
     text-align: left;
-    width: 110px;
+    width: 100px;
     font-size: 12px;
+    white-space: nowrap;
 }
 
 .time-column strong {
@@ -182,8 +178,8 @@ body {
 }
 
 .lesson-item {
-    margin-bottom: 8px;
-    padding: 8px;
+    margin-bottom: 6px;
+    padding: 6px;
     background: #f8f9fa;
     border-radius: 6px;
     transition: all 0.2s;
@@ -197,18 +193,18 @@ body {
 .lesson-name {
     font-weight: 600;
     color: #1a1a2e;
-    margin-bottom: 5px;
-    font-size: 13px;
+    margin-bottom: 3px;
+    font-size: 12px;
 }
 
 .lesson-teacher {
-    font-size: 11px;
+    font-size: 10px;
     color: #666;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
 }
 
 .lesson-room {
-    font-size: 11px;
+    font-size: 10px;
     color: #4a90e2;
     font-weight: 500;
 }
@@ -220,7 +216,7 @@ body {
     border-radius: 4px;
     background: #e8f0fe;
     color: #4a90e2;
-    margin-top: 5px;
+    margin-top: 4px;
 }
 
 .no-lessons {
@@ -242,14 +238,16 @@ body {
     margin-bottom: 15px;
 }
 
-/* Подсветка поиска */
 .highlight {
     background: #fff3cd !important;
     border-radius: 4px;
     padding: 4px;
 }
 
-/* Адаптация для мобилки */
+.schedule-table tbody tr {
+    height: auto;
+}
+
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -289,8 +287,8 @@ body {
     }
     
     .schedule-table {
-        font-size: 11px;
-        min-width: 600px;
+        font-size: 10px;
+        min-width: 650px;
     }
     
     .schedule-table th,
@@ -299,17 +297,48 @@ body {
     }
     
     .time-column {
-        width: 85px;
-        font-size: 10px;
+        width: 75px;
+        font-size: 9px;
     }
-
-
+    
+    .time-column strong {
+        font-size: 9px;
+    }
     
     .lesson-item {
-        padding: 5px;
+        padding: 4px;
+        margin-bottom: 4px;
+    }
+    
+    .lesson-name {
+        font-size: 10px;
+    }
+    
+    .lesson-teacher, .lesson-room {
+        font-size: 9px;
+    }
+    
+    .lesson-type {
+        font-size: 8px;
+        padding: 1px 4px;
     }
     
     .day-date {
         font-size: 9px;
+    }
+}
+
+@media (max-width: 480px) {
+    .schedule-wrapper {
+        padding: 10px 15px;
+    }
+    
+    .schedule-table {
+        font-size: 9px;
+        min-width: 550px;
+    }
+    
+    .time-column {
+        width: 60px;
     }
 }

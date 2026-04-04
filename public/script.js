@@ -3,10 +3,11 @@ let currentWeek = 31;
 let scheduleData = null;
 
 const days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
-const timeSlots = ['08:00', '09:45', '11:30', '13:15'];
+
+const timeSlots = ['08:00', '09:45', '11:30', '13:30', '15:15', '17:00'];
 
 $(document).ready(function() {
-    console.log('✅ Скрипт загружен');
+    console.log('Скрипт загружен');
     
     loadGroups();
     
@@ -59,8 +60,8 @@ function loadGroups() {
                 });
             } else {
                 $select.append('<option value="1213641978">6413-100503D</option>');
-                $select.append('<option value="1213641979">6411-100503D</option>');
-                $select.append('<option value="1213641980">6412-100503D</option>');
+                $select.append('<option value="1282690301">6411-100503D</option>');
+                $select.append('<option value="1282690279">6412-100503D</option>');
             }
         },
         error: function(xhr, status, error) {
@@ -69,8 +70,8 @@ function loadGroups() {
             $select.empty();
             $select.append('<option value="">-- Выберите группу --</option>');
             $select.append('<option value="1213641978">6413-100503D</option>');
-            $select.append('<option value="1213641979">6411-100503D</option>');
-            $select.append('<option value="1213641980">6412-100503D</option>');
+            $select.append('<option value="1282690301">6411-100503D</option>');
+            $select.append('<option value="1282690279">6412-100503D</option>');
         }
     });
 }
@@ -136,7 +137,9 @@ function renderScheduleTable() {
         '08:00': '08:00 - 09:35',
         '09:45': '09:45 - 11:20',
         '11:30': '11:30 - 13:05',
-        '13:15': '13:15 - 14:50'
+        '13:30': '13:30 - 15:05',
+        '15:15': '15:15 - 16:50',
+        '17:00': '17:00 - 18:35'
     };
     
     let html = '<table class="schedule-table">';
