@@ -48,7 +48,7 @@ app.get('/api/schedule/group/:id', async (req, res) => {
         
     } catch (error) {
         console.error('Parse error:', error.message);
-        res.json(getMockSchedule(groupId, groupName, week));
+        res.status(500).json({ error: error.message });
     }
 });
 
@@ -57,8 +57,7 @@ function parseSchedule(html, groupId, groupName, weekNum) {
     
     const scheduleItems = $('.schedule__items');
     if (scheduleItems.length === 0) {
-        console.log('Schedule container not found');
-        return getMockSchedule(groupId, groupName, weekNum);
+        throw new Error('Schedule container not found');
     }
     
     const days = [];
@@ -71,8 +70,7 @@ function parseSchedule(html, groupId, groupName, weekNum) {
     });
     
     if (days.length === 0) {
-        console.log('No days found');
-        return getMockSchedule(groupId, groupName, weekNum);
+        throw new Error('No days found');
     }
     
     console.log(`Found days: ${days.length}`);
@@ -104,8 +102,6 @@ function parseSchedule(html, groupId, groupName, weekNum) {
             timeInterval = `${timeRange[0]}-${timeRange[1]}`;
         } else if (timeRange.length === 1) {
             timeInterval = timeRange[0];
-        } else {
-            timeInterval = timeRange.join(', ');
         }
         
         let nextElement = $timeBlock.next();
@@ -113,11 +109,13 @@ function parseSchedule(html, groupId, groupName, weekNum) {
         
         while (nextElement.length && !nextElement.hasClass('schedule__time')) {
             if (nextElement.hasClass('schedule__item') && !nextElement.hasClass('schedule__head')) {
-                const $lesson = nextElement.find('.schedule__lesson');
+                const lessonElements = nextElement.find('.schedule__lesson');
                 
-                if ($lesson.length && dayIndex < days.length) {
+                lessonElements.each((lessonIdx, lessonElem) => {
+                    const $lesson = $(lessonElem);
+                    
                     const subject = $lesson.find('.schedule__discipline').text().trim();
-                    if (subject) {
+                    if (subject && dayIndex < days.length) {
                         const type = $lesson.find('.schedule__lesson-type-chip').text().trim();
                         const place = $lesson.find('.schedule__place').text().trim();
                         
@@ -137,7 +135,7 @@ function parseSchedule(html, groupId, groupName, weekNum) {
                             type: type || 'Занятие'
                         });
                     }
-                }
+                });
                 dayIndex++;
             }
             nextElement = nextElement.next();
@@ -186,34 +184,6 @@ function formatTimeRange(timeStr) {
         '17:00': '17:00-18:35'
     };
     return timeMap[timeStr] || timeStr;
-}
-
-function getMockSchedule(groupId, groupName, weekNum) {
-    const mockData = {
-        '6413-100503D': {
-            '31': [
-                { day: 'Понедельник', date: '30.03.2026', lessons: [{ time: '08:00-09:35', name: 'Военная подготовка', teacher: 'Преподаватели Военной Кафедры', room: 'Военная кафедра - 4', type: 'Другое' }] },
-                { day: 'Вторник', date: '31.03.2026', lessons: [] },
-                { day: 'Среда', date: '01.04.2026', lessons: [{ time: '09:45-11:20', name: 'Современные технологии информационной безопасности', teacher: 'Максимов А.И.', room: 'online', type: 'Лекция' }] },
-                { day: 'Четверг', date: '02.04.2026', lessons: [{ time: '11:30-13:05', name: 'Безопасность открытых информационных систем', teacher: 'Борисов А.Н.', room: '101а - 3', type: 'Лабораторная' }] },
-                { day: 'Пятница', date: '03.04.2026', lessons: [{ time: '09:45-11:20', name: 'Современные технологии информационной безопасности', teacher: 'Максимов А.И.', room: 'online', type: 'Лабораторная' }] },
-                { day: 'Суббота', date: '04.04.2026', lessons: [] }
-            ]
-        }
-    };
-    
-    const weekData = (mockData[groupName] && mockData[groupName][weekNum]) || [];
-    
-    return {
-        group: groupName,
-        fullName: '10.05.03 Информационная безопасность автоматизированных систем',
-        weeks: {
-            current: parseInt(weekNum) || 31,
-            weeks: {
-                [weekNum]: weekData
-            }
-        }
-    };
 }
 
 app.listen(PORT, () => {

@@ -127,7 +127,14 @@ function renderScheduleTable() {
             day.lessons.forEach(lesson => {
                 if (lesson.time) {
                     const startTime = lesson.time.split('-')[0];
-                    lessonsMap[day.day][startTime] = lesson;
+                    if (lessonsMap[day.day][startTime]) {
+                        if (!Array.isArray(lessonsMap[day.day][startTime])) {
+                            lessonsMap[day.day][startTime] = [lessonsMap[day.day][startTime]];
+                        }
+                        lessonsMap[day.day][startTime].push(lesson);
+                    } else {
+                        lessonsMap[day.day][startTime] = lesson;
+                    }
                 }
             });
         }
@@ -160,22 +167,35 @@ function renderScheduleTable() {
         html += `<td class="time-column"><strong>${fullTimeSlots[timeSlot]}</strong></td>`;
         
         days.forEach(day => {
-            const lesson = lessonsMap[day] ? lessonsMap[day][timeSlot] : null;
+            const lessonData = lessonsMap[day] ? lessonsMap[day][timeSlot] : null;
             
-            if (lesson) {
-                html += `
-                    <td class="lesson-cell">
+            html += `<td class="lesson-cell">`;
+            
+            if (lessonData) {
+                const lessons = Array.isArray(lessonData) ? lessonData : [lessonData];
+
+                if (lessons.length > 1) {
+                    console.log('Найдено несколько занятий в ячейке:', lessons.length);
+                }
+                
+                lessons.forEach((lesson, idx) => {
+                    html += `
                         <div class="lesson-item">
                             <div class="lesson-name">${escapeHtml(lesson.name)}</div>
                             <div class="lesson-teacher">${escapeHtml(lesson.teacher)}</div>
                             <div class="lesson-room">${escapeHtml(lesson.room)}</div>
                             <span class="lesson-type">${escapeHtml(lesson.type)}</span>
                         </div>
-                    </td>
-                `;
+                    `;
+                    if (idx < lessons.length - 1) {
+                        html += `<div class="lesson-separator"></div>`;
+                    }
+                });
             } else {
-                html += `<td class="lesson-cell"><div class="no-lessons">—</div></td>`;
+                html += `<div class="no-lessons">—</div>`;
             }
+            
+            html += `</td>`;
         });
         
         html += '</tr>';

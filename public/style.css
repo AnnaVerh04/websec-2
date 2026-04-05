@@ -219,6 +219,16 @@ body {
     margin-top: 4px;
 }
 
+.lesson-separator {
+    height: 1px;
+    background: #e0e0e0;
+    margin: 8px 0;
+}
+
+.lesson-item:last-child {
+    margin-bottom: 0;
+}
+
 .no-lessons {
     color: #ccc;
     font-size: 12px;
