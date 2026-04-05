@@ -11,7 +11,7 @@
         <div class="header">
             <div class="group-info">
                 <h1 id="groupTitle">Расписание СГАУ</h1>
-                <p id="groupSubtitle" class="subtitle">Выберите группу</p>
+                <p id="groupSubtitle" class="subtitle">Выберите группу или найдите преподавателя</p>
             </div>
         </div>
 
@@ -19,7 +19,12 @@
             <select id="groupSelect" class="group-select">
                 <option value="">-- Выберите группу --</option>
             </select>
-            <button id="loadBtn" class="btn-primary">Показать расписание</button>
+            <button id="loadBtn" class="btn-primary">Показать расписание группы</button>
+        </div>
+
+        <div class="teacher-search">
+            <input type="text" id="teacherSearchInput" class="teacher-search-input" placeholder="Введите фамилию преподавателя...">
+            <button id="searchTeacherBtn" class="btn-secondary">Найти преподавателя</button>
         </div>
 
         <div class="week-navigation">
@@ -31,8 +36,8 @@
         <div class="schedule-wrapper">
             <div id="scheduleContainer">
                 <div class="placeholder">
-                    <span>📅</span>
                     <p>Выберите группу для просмотра расписания</p>
+                    <p style="font-size: 12px; margin-top: 10px;">или введите фамилию преподавателя</p>
                 </div>
             </div>
         </div>
