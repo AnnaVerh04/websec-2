@@ -35,21 +35,7 @@ body {
     opacity: 0.9;
 }
 
-.search-box {
-    margin-top: 15px;
-}
-
-.search-input {
-    width: 100%;
-    max-width: 300px;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    outline: none;
-}
-
-.group-selector {
+.group-selector, .teacher-search {
     padding: 20px 30px;
     background: #f8f9fa;
     border-bottom: 1px solid #e0e0e0;
@@ -59,7 +45,7 @@ body {
     flex-wrap: wrap;
 }
 
-.group-select {
+.group-select, .teacher-search-input {
     flex: 1;
     min-width: 250px;
     padding: 10px 12px;
@@ -69,9 +55,8 @@ body {
     background: white;
 }
 
-.btn-primary {
+.btn-primary, .btn-secondary {
     padding: 10px 24px;
-    background: #4a90e2;
     color: white;
     border: none;
     border-radius: 8px;
@@ -80,8 +65,20 @@ body {
     transition: background 0.2s;
 }
 
+.btn-primary {
+    background: #4a90e2;
+}
+
 .btn-primary:hover {
     background: #357abd;
+}
+
+.btn-secondary {
+    background: #6c757d;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
 }
 
 .week-navigation {
@@ -248,14 +245,39 @@ body {
     margin-bottom: 15px;
 }
 
-.highlight {
-    background: #fff3cd !important;
-    border-radius: 4px;
-    padding: 4px;
-}
-
 .schedule-table tbody tr {
     height: auto;
+}
+
+.search-results {
+    padding: 20px;
+}
+
+.search-results h3 {
+    margin-bottom: 15px;
+}
+
+.teacher-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.btn-select-teacher {
+    padding: 5px 15px;
+    background: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.lesson-groups {
+    font-size: 10px;
+    color: #666;
+    margin-top: 4px;
 }
 
 @media (max-width: 768px) {
@@ -271,16 +293,17 @@ body {
         font-size: 20px;
     }
     
-    .group-selector {
+    .group-selector, .teacher-search {
         padding: 15px 20px;
         flex-direction: column;
     }
     
-    .group-select {
+    .group-select, .teacher-search-input {
         width: 100%;
+        min-width: auto;
     }
     
-    .btn-primary {
+    .btn-primary, .btn-secondary {
         width: 100%;
     }
     
@@ -351,69 +374,4 @@ body {
     .time-column {
         width: 60px;
     }
-}
-
-.teacher-search {
-    padding: 15px 30px;
-    background: #f8f9fa;
-    border-bottom: 1px solid #e0e0e0;
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.teacher-search-input {
-    flex: 1;
-    min-width: 250px;
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-}
-
-.btn-secondary {
-    padding: 10px 24px;
-    background: #6c757d;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.btn-secondary:hover {
-    background: #5a6268;
-}
-
-.search-results {
-    padding: 20px;
-}
-
-.search-results h3 {
-    margin-bottom: 15px;
-}
-
-.teacher-result {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-}
-
-.btn-select-teacher {
-    padding: 5px 15px;
-    background: #4a90e2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.lesson-groups {
-    font-size: 10px;
-    color: #666;
-    margin-top: 4px;
 }

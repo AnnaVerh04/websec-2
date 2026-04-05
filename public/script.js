@@ -8,6 +8,15 @@ let currentTeacherName = '';
 const days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 const timeSlots = ['08:00', '09:45', '11:30', '13:30', '15:15', '17:00'];
 
+const fullTimeSlots = {
+    '08:00': '08:00 - 09:35',
+    '09:45': '09:45 - 11:20',
+    '11:30': '11:30 - 13:05',
+    '13:30': '13:30 - 15:05',
+    '15:15': '15:15 - 16:50',
+    '17:00': '17:00 - 18:35'
+};
+
 function getCurrentWeek() {
     const today = new Date();
     const startDate = new Date(2026, 2, 30);
@@ -122,7 +131,7 @@ function loadSchedule() {
             scheduleData = data;
             
             if (data && data.weeks && data.weeks.weeks) {
-                renderScheduleTable();
+                renderScheduleTable(false);
                 updateGroupInfo();
                 currentView = 'group';
             } else {
@@ -137,7 +146,7 @@ function loadSchedule() {
 }
 
 function searchTeacher(query) {
-    $('#scheduleContainer').html('<div class="placeholder"><span>⏳</span><p>Поиск преподавателя...</p></div>');
+    $('#scheduleContainer').html('<div class="placeholder"><p>Поиск преподавателя...</p></div>');
     
     $.ajax({
         url: `/api/search/teacher?q=${encodeURIComponent(query)}`,
@@ -185,7 +194,7 @@ function loadTeacherSchedule(teacherId, teacherName) {
         success: function(data) {
             scheduleData = data;
             if (data && data.weeks && data.weeks.weeks) {
-                renderScheduleTableTeacher();
+                renderScheduleTable(true);
                 $('#groupTitle').text(`Расписание: ${teacherName}`);
                 $('#groupSubtitle').text('Преподаватель');
             } else {
@@ -198,7 +207,7 @@ function loadTeacherSchedule(teacherId, teacherName) {
     });
 }
 
-function renderScheduleTable() {
+function renderScheduleTable(isTeacher) {
     if (!scheduleData || !scheduleData.weeks || !scheduleData.weeks.weeks) {
         showError('Нет данных для отображения');
         return;
@@ -233,15 +242,6 @@ function renderScheduleTable() {
         }
     });
     
-    const fullTimeSlots = {
-        '08:00': '08:00 - 09:35',
-        '09:45': '09:45 - 11:20',
-        '11:30': '11:30 - 13:05',
-        '13:30': '13:30 - 15:05',
-        '15:15': '15:15 - 16:50',
-        '17:00': '17:00 - 18:35'
-    };
-    
     let html = '<table class="schedule-table">';
     html += '<thead>';
     html += '<tr>';
@@ -268,112 +268,25 @@ function renderScheduleTable() {
                 const lessons = Array.isArray(lessonData) ? lessonData : [lessonData];
                 
                 lessons.forEach((lesson, idx) => {
-                    html += `
-                        <div class="lesson-item">
-                            <div class="lesson-name">${escapeHtml(lesson.name)}</div>
-                            <div class="lesson-teacher">${escapeHtml(lesson.teacher)}</div>
-                            <div class="lesson-room">${escapeHtml(lesson.room)}</div>
-                            <span class="lesson-type">${escapeHtml(lesson.type)}</span>
-                        </div>
-                    `;
-                    if (idx < lessons.length - 1) {
-                        html += `<div class="lesson-separator"></div>`;
-                    }
-                });
-            } else {
-                html += `<div class="no-lessons">—</div>`;
-            }
-            
-            html += `</td>`;
-        });
-        
-        html += '</tr>';
-    });
-    
-    html += '</tbody>';
-    html += '</table>';
-    
-    $('#scheduleContainer').html(html);
-}
-
-function renderScheduleTableTeacher() {
-    if (!scheduleData || !scheduleData.weeks || !scheduleData.weeks.weeks) {
-        showError('Нет данных для отображения');
-        return;
-    }
-    
-    const weekData = scheduleData.weeks.weeks[currentWeek];
-    if (!weekData) {
-        showError(`Нет данных за ${currentWeek} неделю`);
-        return;
-    }
-    
-    const lessonsMap = {};
-    const datesMap = {};
-    
-    weekData.forEach(day => {
-        lessonsMap[day.day] = {};
-        datesMap[day.day] = day.date || '';
-        if (day.lessons && Array.isArray(day.lessons)) {
-            day.lessons.forEach(lesson => {
-                if (lesson.time) {
-                    const startTime = lesson.time.split('-')[0];
-                    if (lessonsMap[day.day][startTime]) {
-                        if (!Array.isArray(lessonsMap[day.day][startTime])) {
-                            lessonsMap[day.day][startTime] = [lessonsMap[day.day][startTime]];
-                        }
-                        lessonsMap[day.day][startTime].push(lesson);
+                    if (isTeacher) {
+                        html += `
+                            <div class="lesson-item">
+                                <div class="lesson-name">${escapeHtml(lesson.name)}</div>
+                                <div class="lesson-room">${escapeHtml(lesson.room)}</div>
+                                <span class="lesson-type">${escapeHtml(lesson.type)}</span>
+                                ${lesson.groups ? `<div class="lesson-groups">Группы: ${escapeHtml(lesson.groups)}</div>` : ''}
+                            </div>
+                        `;
                     } else {
-                        lessonsMap[day.day][startTime] = lesson;
+                        html += `
+                            <div class="lesson-item">
+                                <div class="lesson-name">${escapeHtml(lesson.name)}</div>
+                                <div class="lesson-teacher">${escapeHtml(lesson.teacher)}</div>
+                                <div class="lesson-room">${escapeHtml(lesson.room)}</div>
+                                <span class="lesson-type">${escapeHtml(lesson.type)}</span>
+                            </div>
+                        `;
                     }
-                }
-            });
-        }
-    });
-    
-    const fullTimeSlots = {
-        '08:00': '08:00 - 09:35',
-        '09:45': '09:45 - 11:20',
-        '11:30': '11:30 - 13:05',
-        '13:30': '13:30 - 15:05',
-        '15:15': '15:15 - 16:50',
-        '17:00': '17:00 - 18:35'
-    };
-    
-    let html = '<table class="schedule-table">';
-    html += '<thead>';
-    html += '<tr>';
-    html += '<th>Время</th>';
-    
-    days.forEach(day => {
-        const date = datesMap[day] ? `<br><span class="day-date">${formatDate(datesMap[day])}</span>` : '';
-        html += `<th>${day}${date}</th>`;
-    });
-    html += '</tr>';
-    html += '</thead>';
-    html += '<tbody>';
-    
-    timeSlots.forEach(timeSlot => {
-        html += '<tr>';
-        html += `<td class="time-column"><strong>${fullTimeSlots[timeSlot]}</strong></td>`;
-        
-        days.forEach(day => {
-            const lessonData = lessonsMap[day] ? lessonsMap[day][timeSlot] : null;
-            
-            html += `<td class="lesson-cell">`;
-            
-            if (lessonData) {
-                const lessons = Array.isArray(lessonData) ? lessonData : [lessonData];
-                
-                lessons.forEach((lesson, idx) => {
-                    html += `
-                        <div class="lesson-item">
-                            <div class="lesson-name">${escapeHtml(lesson.name)}</div>
-                            <div class="lesson-room">${escapeHtml(lesson.room)}</div>
-                            <span class="lesson-type">${escapeHtml(lesson.type)}</span>
-                            ${lesson.groups ? `<div class="lesson-groups">Группы: ${escapeHtml(lesson.groups)}</div>` : ''}
-                        </div>
-                    `;
                     if (idx < lessons.length - 1) {
                         html += `<div class="lesson-separator"></div>`;
                     }

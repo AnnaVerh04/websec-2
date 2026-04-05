@@ -130,13 +130,7 @@ app.get('/api/schedule/teacher', async (req, res) => {
         
     } catch (error) {
         console.error('Teacher parse error:', error);
-        
-        const teacher = knownTeachers.find(t => t.id === teacherId);
-        if (teacher) {
-            res.json(getMockTeacherSchedule(teacherId, week));
-        } else {
-            res.status(500).json({ error: error.message });
-        }
+        res.status(500).json({ error: error.message });
     }
 });
 
